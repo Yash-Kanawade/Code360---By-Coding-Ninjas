@@ -1,0 +1,34 @@
+import java.util.*;
+import java.io.*;
+
+public class Solution {
+    public static String findLCS(int n, int m, String s1, String s2){
+        
+        String[][] dp = new String[n][m];
+        for(String[] row : dp){
+            Arrays.fill(row,"");
+        }
+        return function(n-1,m-1,s1,s2,dp);
+        
+    }
+    public static String function(int i,int j,String s1, String s2, String[][] dp){
+        if(i < 0 || j < 0)
+            return "";
+        if(dp[i][j] != ""){
+            return dp[i][j];
+        }
+        if(s1.charAt(i) == s2.charAt(j))
+        {
+            dp[i][j] = function(i-1,j-1,s1,s2,dp) + s1.charAt(i) + dp[i][j];
+        }
+        else{
+            String t1 = function(i-1,j,s1,s2,dp);
+            String t2 =function(i,j-1,s1,s2,dp);
+            if(t1.length() > t2.length())
+                dp[i][j] = t1 + dp[i][j];
+            else
+                dp[i][j] = t2 + dp[i][j];
+        }
+        return dp[i][j];
+    }
+}
